@@ -1,0 +1,19 @@
+{
+    "name": "__MSG_extName__",
+    "default_locale": "en",
+    "version": "0.0.5",
+    "description": "__MSG_description__",
+    "icons": {"16":"icons/multiswitch_16.png",
+    					"48":"icons/multiswitch_48.png",
+    					"150":"icons/multiswitch_150.png"},
+    "page_action": {
+        "default_icon": "icons/multiswitch_16.png",
+        "default_title": "Do the switch",
+        "popup": "popup.html" 
+    },
+    "permissions": [
+        "tabs" 
+    ],
+    "background_page": "background.html",
+    "options_page": "options.html" 
+}

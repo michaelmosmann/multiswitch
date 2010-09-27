@@ -1,0 +1,127 @@
+{
+	"extName" : {
+		"message":"MultiSwitch",
+		"description":"Extension name."
+	},
+	"description" : {
+		"message":"Switch between development, test and productive application.",
+		"description":"Description of the extension."
+	},
+	"twitterMessage" : {
+		"message":"I love #MultiSwitch for Chrome http://bit.ly/aptpVZ",
+		"description":"Message for Twitter"
+	},
+	"twitterHeadline": {
+		"message":"How to let everybody know that I love to use MultiSwitch?",
+		"description":"Headline for Twitter"
+	},
+	"twitterText": {
+		"message":"Just let everybody know via Twitter",
+		"description":"Twitter text"
+	},
+	"creditsHead": {
+		"message":"Who made this incredible Chrome Extension?",
+		"description":"Headline for credits"
+	},
+	"creditsText": {
+		"message":"This extension was developed by Christian Ewers, Michael Mosmann & <a href='http://www.rexin-world.de' target='_blank'>Mario Rexin</a>.",
+		"description":"Text for credits"
+	},
+	"howToHead": {
+		"message":"How to use MultiSwitch?",
+		"description":"Headline for HowTo"
+	},
+	"howToText": {
+		"message":"Whenever you browse on a host defined in one of your MultiSwitch applications the MultiSwitch icon will appear inside the adress bar. 
+    	Click on this icon to the your options for switching to other hosts of your Multiswitch application.",
+		"description":"HowTo use MultiSwitch"
+	},
+	"configureHead": {
+		"message":"How to configure MultiSwitch?",
+		"description":"Headline for ConfigHowTo"
+	},
+	"configureText1": {
+		"message":"First you should add a new application:",
+		"description":"configText1"
+	},
+	"configureText2": {
+		"message":"Then you can add hosts for this application. An application could look like this:",
+		"description":"configText2"
+	},
+	"configureText3": {
+		"message":"Maybe you prefer just clicking the MultiSwitch icon to change the host. To enable this feature just check the checkbox within the configuration.",
+		"description":"configText3"
+	},
+	"whyHead": {
+		"message":"Why should I use MultiSwitch?",
+		"description":"Why someone should use MultiSwitch"
+	},
+	"whyText": {
+		"message":"Whenever you have the need to simply switch between development, test and productive hosts you should use MultiSwitch.",
+		"description":"Why text"
+	},
+	"appTab" : {
+		"message":"Applications",
+		"description":"Applications Tab"
+	},
+	"configTab": {
+		"message":"Configuration",
+		"description":"Configuration Tab"
+	},
+	"helpTab": {
+		"message":"Help",
+		"description":"Help Tab"
+	},
+	"messageSavedApps": {
+		"message":"Saved Applications:",
+		"description":"saved Apps"
+	},
+	"createNewAppButton": {
+		"message":"New",
+		"description":"New button"
+	},
+	"deleteButton": {
+		"message":"Delete",
+		"description":"Delete button"
+	},
+	"updateButton": {
+		"message":"Update",
+		"description":"Update button"
+	},
+	"addHostButton": {
+		"message":"Add Host",
+		"description":"Add host button"
+	},
+	"changeHostByClickMessage": {
+		"message":"Change host by click: ",
+		"description":"Change host by click"
+	},
+	"addApplicationMessage": {
+		"message":"Add Application: ",
+		"description":"Add app"
+	},
+	"multiSwitchOptionsMessage": {
+		"message":"MultiSwitch Options",
+		"description":"Options header"
+	},
+	"multiSwitchChangeByHostPic": {
+		"message":"multiswitch_change_host_by_click_en.png",
+		"description":"Multiswitch by click screenshot"
+	},
+	"multiSwitchNewAppPic": {
+		"message":"multiswitch_example_new_app_en.png",
+		"description":"Multiswitch new app screenshot"
+	},
+	"multiSwitchExampleAppPic": {
+		"message":"multiswitch_example_app_en_2.png",
+		"description":"Multiswitch example app screenshot"
+	},
+	"multiSwitchDoTheSwitchPic": {
+		"message":"multiswitch_do_the_switch_en.png",
+		"description":"Multiswitch do the switch screenshot"
+	},
+	"typeLabel":{
+		"message":"Type",
+		"description":"Type of Host"
+	}
+}

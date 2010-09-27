@@ -1,0 +1,68 @@
+<html>
+ 	<head>
+ 		<script type="text/javascript" src="multiswitch-core.js"></script>
+    	<script type="text/javascript">  	
+
+    	var apps = null;
+    	var currentApp = null;
+    	var currentHost = null;
+    	
+    	var init = function(){
+    		loadAppList();
+       	chrome.tabs.onUpdated.addListener(function(tabId,info,tab) {
+					if(info.status=="loading"){
+       			getUrl(tab);
+					}
+       	});
+       	chrome.tabs.onSelectionChanged.addListener(function(tabId,info) {
+          chrome.tabs.get(tabId,getUrl);
+       	});
+      };
+
+      var loadAppList = function(){
+				apps=MultiSwitch.Apps.list();
+      };
+
+      var refresh = function(){
+          loadAppList();
+      };
+    	
+     	var getUrl=function(tab) {
+        refresh();
+     		var url = tab.url;
+     		var app = getAppForURL(url);
+     		if(app!=null) {
+         		currentApp = app;
+         		chrome.pageAction.show(tab.id);
+     		} else {
+        	currentApp=null;
+     			chrome.pageAction.hide(tab.id);
+     		}
+     	};
+
+     	var getAppForURL = function(url) {
+       	if(apps!=null)
+        {
+           	for(var i=0;i<apps.length;i++)
+            {
+               	var app = apps[i];
+               	var hosts=app.hosts();
+               	for(var j=0;j<hosts.length;j++)
+                {
+                   	var host = hosts[j];
+                   	if(url.indexOf(host.prefix)>-1)
+                    {
+                        currentHost = host;
+                       	return app;
+                   	}
+               	}
+           	}
+       	}
+       	return null;
+     	};
+
+    	</script>
+  	</head>
+  	<body onload="init();">
+  	</body>
+</html>

@@ -1,0 +1,255 @@
+<html>
+<head><title>Multiswitch Options</title>
+
+<!-- Sam Skin CSS for TabView -->
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/tabview/assets/skins/sam/tabview.css">
+ 
+<!-- JavaScript Dependencies for Tabview: -->
+<script src="http://yui.yahooapis.com/2.8.0r4/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script src="http://yui.yahooapis.com/2.8.0r4/build/element/element-min.js"></script>
+ 
+<!-- OPTIONAL: Connection (required for dynamic loading of data) -->
+<script src="http://yui.yahooapis.com/2.8.0r4/build/connection/connection-min.js"></script>
+ 
+<!-- Source file for TabView -->
+<script src="http://yui.yahooapis.com/2.8.0r4/build/tabview/tabview-min.js"></script>
+
+<!-- Source files for jquery -->
+<script src="js/jquery-1.4.2.js"></script>
+<link rel="stylesheet" href="http://dev.jquery.com/view/trunk/plugins/treeview/demo/screen.css" type="text/css" />
+<link rel="stylesheet" href="http://dev.jquery.com/view/trunk/plugins/treeview/jquery.treeview.css" type="text/css" />
+<script type="text/javascript" src="http://dev.jquery.com/view/trunk/plugins/treeview/jquery.treeview.js"></script>
+<script src="multiswitch-core.js"></script>
+<style type="text/css">
+li.host{
+cursor: pointer;
+}
+
+</style>
+<script type="text/javascript">
+
+
+function refresh(){
+	$('#apps').html("");
+	init_options();
+}
+
+function init_options(){
+	bg = chrome.extension.getBackgroundPage();
+	render(MultiSwitch.Apps.list());
+	$('#changeByClick').attr("checked",bg.MultiSwitch.Options.get("changeByClick"));
+	$('#changeByClick').click(function(){
+		bg.MultiSwitch.Options.set("changeByClick",this.checked);
+	});
+};
+
+function render(applist)
+{
+	if (applist!=null)
+	{
+		var appsListNode = $('#apps');
+		for(var i = 0; i < applist.length; i++)
+		{
+			renderApp(applist[i],appsListNode);
+		}
+		$('#apps').treeview({collapsed: false});
+	}
+}
+
+
+function renderApp(app, listEl)
+{
+	var app_id=app.id();
+	
+	var appEl = $('<li>').attr("id",app.id)
+	.html("<span class='folder' style='display:inline;'>"+app.name+"</span>");
+	var deleteEl = $("<button type='button'>"+chrome.i18n.getMessage("deleteButton")+"</button>").click(function(){
+		//app_delete_name(app.name);
+		var app=MultiSwitch.Apps.get(app_id);
+		app.remove();
+		refresh();
+	});
+	appEl.append(deleteEl);
+	var hostUl = $("<ul class='hostList'></ul>");
+	if(app.hosts()!=null)
+	{
+		var hosts=app.hosts();
+		for(var i = 0; i < hosts.length; i++){
+			renderHost(hosts[i],app,hostUl);
+		}
+	}
+
+	var listEl2 = $('<li>');
+	var hostEl2 = $('<span class="file" style="display:inline;"></span>');
+	var addHostEl2 = $("<button type='button'>"+chrome.i18n.getMessage("addHostButton")+"</button/>").click(function(){
+		//app_host_new(app.name,"");
+		var app=MultiSwitch.Apps.get(app_id);
+		app.addHost(new Host());
+		app.update();
+		refresh();
+	})
+	hostEl2.append(addHostEl2);
+	listEl2.append(hostEl2);
+	hostUl.append(listEl2);
+	
+	appEl.append(hostUl);
+//	appEl.append(addHostEl);
+	
+	listEl.append(appEl);
+}
+
+function renderHost(host,app,parentEl)
+{
+	if(host!=null)
+	{
+		var app_id=app.id();
+		var host_id=host.id();
+		
+		var listEl = $('<li>');
+		var hostEl = $('<span class="file" style="display:inline;"></span>');
+		var hostInput = $('<input type="text" size="40" value="'+host.prefix+'"/>');
+		hostEl.append(" Host:");
+		hostEl.append(hostInput);
+		hostEl.append(" Name:");
+		var hostNameInput = $('<input type="text" size="20" value="'+host.name+'"/>');
+		hostEl.append(hostNameInput);
+		hostEl.append(" "+chrome.i18n.getMessage("typeLabel")+":");
+		var select="<select>";
+		var types=MultiSwitch.Hosts.Types();
+		for (var i=0;i<types.length;i++)
+		{
+			var isSelected=(types[i].id==host.type);
+			select+="<option value="+types[i].id+" "+(isSelected ? "selected" : "")+" >"+types[i].name+"</option>";
+		}
+		select+="</select>";
+		
+		var hostTypeSelect = $(select);
+		hostEl.append(hostTypeSelect);
+		
+		var editButton = $('<button type="button">'+chrome.i18n.getMessage("updateButton")+'</button>');
+		var deleteButton = $('<button type="button">'+chrome.i18n.getMessage("deleteButton")+'</button>');
+		listEl.append(hostEl);
+		listEl.append(editButton);
+		listEl.append(deleteButton);
+		$(editButton).click(function(el)
+		{
+			var app=MultiSwitch.Apps.get(app_id);
+			var host=app.getHost(host_id);
+			if (host==null)
+			{
+				host=new Host();
+				app.addHost(host);
+			}
+			host.prefix=hostInput.attr("value");
+			host.type=hostTypeSelect.attr("value");
+			host.name=hostNameInput.attr("value");
+			app.update();
+			refresh();
+		});
+		$(deleteButton).click(function(el){
+			var app=MultiSwitch.Apps.get(app_id);
+			var host=app.getHost(host_id);
+			if (host!=null) app.removeHost(host);
+			app.update();
+			refresh();
+		});
+		parentEl.append(listEl);
+	}
+}
+
+function createNewApp(inputId)
+{
+	var app_name = document.getElementById("app.name");
+	if ((app_name.value) && (app_name.value!=''))
+	{
+		//app_add(app_new(app_name.value));
+		var app=new App();
+		app.name=app_name.value;
+		app.update();
+		app_name.value='';
+		refresh();
+	}
+}
+
+</script>
+</head>
+
+<body onload="init_options()" class="yui-skin-sam">
+
+
+<div style="width: 800">
+<h1><script type="text/javascript">document.write(chrome.i18n.getMessage("multiSwitchOptionsMessage"));</script></h1>
+<div id="options" class="yui-navset"> 
+    <ul class="yui-nav"> 
+        <li class="selected"><a href="#tab1"><em><script type="text/javascript">document.write(chrome.i18n.getMessage("appTab"))</script></em></a></li> 
+        <li><a href="#tab2"><em><script type="text/javascript">document.write(chrome.i18n.getMessage("configTab"))</script></em></a></li> 
+        <li><a href="#tab3"><em><script type="text/javascript">document.write(chrome.i18n.getMessage("helpTab"))</script></em></a></li> 
+    </ul>   
+    
+<!--    first Tab APPS    -->
+<div class="yui-content"> 
+	<div id="tab1">
+		<div id="options_content">
+		<div id="flash"></div>
+		<span style="font-size: 1.2em;font-weight: bold;"><script type="text/javascript">document.write(chrome.i18n.getMessage("messageSavedApps"))</script></span>
+		<ul id="apps" class="filetree"></ul>
+		
+		<script type="text/javascript">document.write(chrome.i18n.getMessage("addApplicationMessage"));</script><input type="text" id="app.name">
+		<button onclick="createNewApp()" id="createNewAppButton"><script type="text/javascript">document.write(chrome.i18n.getMessage("createNewAppButton"));</script></button><br>
+		</div>        
+	</div>
+	
+<!-- 	second Tab CONFIG	-->
+	<div id="tab2">
+		<p>
+			<script type="text/javascript">document.write(chrome.i18n.getMessage("changeHostByClickMessage"));</script><input type="checkbox" id="changeByClick"/>
+		</p>
+	</div>
+        
+<!--    third Tab HELP   --> 
+    <div id="tab3">
+    	<h3><script type="text/javascript">document.write(chrome.i18n.getMessage("whyHead"))</script></h3>
+    	<p><script type="text/javascript">document.write(chrome.i18n.getMessage("whyText"))</script></p>
+    	
+    	<h3><script type="text/javascript">document.write(chrome.i18n.getMessage("configureHead"))</script></h3>
+    	<p><script type="text/javascript">document.write(chrome.i18n.getMessage("configureText1"))</script></p>
+    	<script type="text/javascript">document.write("<img src='images/"+chrome.i18n.getMessage("multiSwitchNewAppPic")+"' border='1'/>")</script>
+    	<p><script type="text/javascript">document.write(chrome.i18n.getMessage("configureText2"))</script></p>
+    	<script type="text/javascript">document.write("<img src='images/"+chrome.i18n.getMessage("multiSwitchExampleAppPic")+"' border='1'/>")</script>
+    	<p><script type="text/javascript">document.write(chrome.i18n.getMessage("configureText3"))</script></p>
+    	<script type="text/javascript">document.write("<img src='images/"+chrome.i18n.getMessage("multiSwitchChangeByHostPic")+"' border='1'/>")</script>
+    	
+    	<h3><script type="text/javascript">document.write(chrome.i18n.getMessage("howToHead"))</script></h3>
+  		<script type="text/javascript">document.write("<img src='images/"+chrome.i18n.getMessage("multiSwitchDoTheSwitchPic")+"' border='1'/>")</script>
+    	<p><script type="text/javascript">document.write(chrome.i18n.getMessage("howToText"))</script></p>
+    	
+    	<h3><script type="text/javascript">document.write(chrome.i18n.getMessage("creditsHead"))</script></h3>
+    	<p><script type="text/javascript">document.write(chrome.i18n.getMessage("creditsText"))</script></p>
+    	
+    	<h3><script type="text/javascript">document.write(chrome.i18n.getMessage("twitterHeadline"))</script></h3>
+    	<p>
+    	<script type="text/javascript">
+			var twtTitle  = chrome.i18n.getMessage("twitterMessage");
+			// Hier fehlt noch die korrekte URL zur Extension
+			//var twtUrl    = "https://chrome.google.com/extensions/detail/dbiakbiifcdomaapbogfmdolieadfolp"; 
+			
+			var maxLength = 140;// - (twtUrl.length + 1);
+			if (twtTitle.length > maxLength) {
+				twtTitle = twtTitle.substr(0, (maxLength - 3))+'...';
+			}
+			var twtLink = 'http://twitter.com/home?status='+encodeURIComponent(twtTitle);
+			document.write('<a href="'+twtLink+'" target="_blank"'+'>'+chrome.i18n.getMessage("twitterText")+'<'+'/a> :-)');
+		</script>
+		</p>
+    </div>
+</div> 
+</div>
+</div>
+
+<script> 
+(function() {
+    var tabView = new YAHOO.widget.TabView('options');
+})();
+</script> 
+</body>
+</html>

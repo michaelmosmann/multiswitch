@@ -1,0 +1,120 @@
+<html>
+  <head>
+	<style type="text/css">
+		#content {
+			width:300px;
+		}
+		#serverlist{
+			width:100%;
+			padding:0px;
+			list-style: none;
+			display:block;
+		}
+		.active ul {
+			background-color: #efefef;
+			font-weight: bold;
+			cursor: default;
+		}
+			ul.host_control {
+				width:100%;
+			list-style: none;
+			display:block;
+			float:left;
+			padding: 0px;
+			margin: 0px;
+			}
+			.host_control li {
+				float:left;
+			padding: 0;
+			cursor: pointer;
+		}
+		.host_button {
+			display:block;
+			width:25px;
+		}
+		.host_name {
+			display:block;
+			width:250px;
+		}
+	</style>
+	<script src="js/jquery-1.4.2.js"></script>
+	<script src="util.js"></script>
+	<script src="multiswitch-core.js"></script>
+	<script type="text/javascript"><!--
+	  var bg; // background page
+			var hosts;
+			var appName;
+	  
+
+	  // initialize timeline template
+	  function init() {
+		  //var list = app_list();
+		bg = chrome.extension.getBackgroundPage();
+
+		if(bg.MultiSwitch.Options.get("changeByClick")){
+			bg.currentHost = bg.currentApp.getNextHost(bg.currentHost.id());
+			switchHost(bg.currentHost.id());
+		}
+		if(bg.currentApp!=null)
+		{
+			hosts = bg.currentApp.hosts();
+			appName=bg.currentApp.name;
+		}
+		$('#title').html(appName);
+		$('#serverlist').html("");
+		for(var i = 0; i < hosts.length; i++){	
+			addServer(hosts[i]);
+		}
+	  }
+
+	  function activate(hostId) {
+	    jQuery('li.host').removeClass("active");
+	    $("#"+hostId).addClass("active");
+	  }
+
+
+
+
+	  function addServer(host){
+		  var template = $('#host_template').html();
+		  template = replaceAll(template,'@HOST_ID@',host.id());
+		  if(host.name!=null && host.name!=""){
+		  template = replaceAll(template,'@HOST_TITLE@',appName+" - "+host.name);
+		  }else{
+		  template = replaceAll(template,'@HOST_TITLE@',appName+" - "+MultiSwitch.Hosts.TypeName(host.type));
+		  }
+		  
+		  var hostEl = $('<li class="host" id="'+host.id()+'">').html(template);
+		  
+		  if(host.id()==bg.currentHost.id()){
+			  $(hostEl).addClass("active");
+		  }
+		  $('#serverlist').append(hostEl);
+  
+	  }
+
+	  function replaceAll(string, text,newText){
+		  while(string.indexOf(text)>-1){
+			  string = string.replace(text,newText); 
+		  }
+		  return string;
+	  }
+	--></script>
+  </head>
+  <body onload="init();">
+	<div id="content">
+		<ul id="serverlist">
+
+		</ul>
+	</div>
+	<div style="display:none;" >
+			<div id="host_template">
+			<ul class="host_control">
+					<li><span class="host_name" onclick="activate('@HOST_ID@');bg.switchHost('@HOST_ID@');">@HOST_TITLE@</span></li>
+					<li><span class="host_button" onclick="bg.switchHost('@HOST_ID@',true);">+</span></li>
+					<li><span class="host_button" onclick="bg.switchHost('@HOST_ID@',true,true);">bg</span></li>
+				</ul>
+			</div>
+	</div>
+  </body>
+</html>

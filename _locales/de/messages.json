@@ -1,0 +1,126 @@
+{
+	"extName" : {
+		"message":"MultiSwitch",
+		"description":"Extension Name."
+	},
+	"description" : {
+		"message":"Wechseln zwischen Entwicklungs-, Test- und Produktivumgebung.",
+		"description":"Beschreibung der Erweiterung."
+	},
+	"twitterMessage" : {
+		"message":"Ich liebe #MultiSwitch fuer Chrome http://bit.ly/aptpVZ",
+		"description":"Nachricht zum Twittern"
+	},
+	"twitterHeadline": {
+		"message":"Wie kann ich der Welt verk&#252;nden, wie toll ich MultiSwitch finde?",
+		"description":"Ueberschrift fuer Twitter"
+	},
+	"twitterText": {
+		"message":"Lass es einfach jeden &#252;ber Twitter wissen",
+		"description":"Twitter Text"
+	},
+	"creditsHead": {
+		"message":"Wer hat diese unglaubliche Chrome Extension entwickelt?",
+		"description":"Ueberschrift fuer Credits"
+	},
+	"creditsText": {
+		"message":"Diese Chrome Extension wurde von Christian Ewers, Michael Mosmann und <a href='http://www.rexin-world.de' target='_blank'>Mario Rexin</a> entwickelt.",
+		"description":"Text fuer Credits"
+	},
+	"howToHead": {
+		"message":"Wie verwendet man MultiSwitch?",
+		"description":"Ueberschrift fuer Anleitung"
+	},
+	"howToText": {
+		"message":"Sobald man eine URL aufruft, die in MultiSwitch innerhalb einer Applikation angegeben wurde, erscheint in der Adressleiste das MultiSwitch Symbol. Ein Klick auf das Symbol &#246ffnet die Liste der abgespeicherten Hosts und ein Klick auf einen Host &#246ffnet diesen.",
+		"description":"Anleitung fuer MultiSwitch"
+	},
+	"configureHead": {
+		"message":"Wie wird MultiSwitch konfiguriert?",
+		"description":"Ueberschrift fuer Konfigurationsanleitung"
+	},
+	"configureText1": {
+		"message":"Als erstes muss eine neue Applikation angelegt werden:",
+		"description":"configText1"
+	},
+	"configureText2": {
+		"message":"Jetzt k&#246nnen die URLs unterschiedlicher Hosts eingetragen werden. Eine Applikation sollte dann so wie hier aussehen:",
+		"description":"configText2"
+	},
+	"configureText3": {
+		"message":"Vielleicht willst Du auch lieber durch einen simplen Klick auf das MultiSwitch den Host wechseln: Das Aktivieren der entsprechenden Checkbox erm&#246glicht auch dies.",
+		"description":"configText3"
+	},
+	"whyHead": {
+		"message":"Warum sollte ich MultiSwitch benutzen?",
+		"description":"Warum sollte jemand MultiSwitch benutzen"
+	},
+	"whyText": {
+		"message":"Immer wenn man einfach zwischen Entwicklungs-, Test- und Produktivsystem umschalten will ist MultiSwitch die richtige Extension.",
+		"description":"Why Text"
+	},
+	"appTab" : {
+		"message":"Applikationen",
+		"description":"Applikationen Tab"
+	},
+	"configTab": {
+		"message":"Konfiguration",
+		"description":"Konfiguration Tab"
+	},
+	"helpTab": {
+		"message":"Hilfe",
+		"description":"Hilfe Tab"
+	},
+	"messageSavedApps": {
+		"message":"gespeicherte Applikationen:",
+		"description":"gespeicherte Apps"
+	},
+	"createNewAppButton": {
+		"message":"Neu",
+		"description":"Neu button"
+	},
+	"deleteButton": {
+		"message":"L&#246schen",
+		"description":"Loeschen Button"
+	},
+	"updateButton": {
+		"message":"Update",
+		"description":"Update button"
+	},
+	"addHostButton": {
+		"message":"Host hinzuf&#252;gen",
+		"description":"Host hinzuf&#252;gen Button"
+	},
+	"changeHostByClickMessage": {
+		"message":"Host per Klick wechseln: ",
+		"description":"Host per Klick wechseln"
+	},
+	"addApplicationMessage": {
+		"message":"Applikation hinzuf&#252;gen: ",
+		"description":"App hinzuf&#252;gen"
+	},
+	"multiSwitchOptionsMessage": {
+		"message":"MultiSwitch Optionen",
+		"description":"Options Kopf"
+	},
+	"multiSwitchChangeByHostPic": {
+		"message":"multiswitch_change_host_by_click_de.png",
+		"description":"Multiswitch by click screenshot"
+	},
+	"multiSwitchNewAppPic": {
+		"message":"multiswitch_example_new_app_de.png",
+		"description":"Multiswitch new app screenshot"
+	},
+	"multiSwitchExampleAppPic": {
+		"message":"multiswitch_example_app_de_2.png",
+		"description":"Multiswitch example app screenshot"
+	},
+	"multiSwitchDoTheSwitchPic": {
+		"message":"multiswitch_do_the_switch_de.png",
+		"description":"Multiswitch do the switch screenshot"
+	},
+	"typeLabel":{
+		"message":"Typ",
+		"description":"Art des Hosts"
+	}
+}

@@ -1,0 +1,44 @@
+* {
+  margin: 0;
+  padding: 0
+}
+
+body { font: 80% Helvetica, Arial, sans-serif }
+
+a {
+  text-decoration: none;
+  font-weight: bold
+}
+
+a:hover { text-decoration: underline }
+
+.thumbnail {
+  float: left;
+  padding: 0 10px
+}
+
+.thumbnail img {
+  width: 48px;
+  height: 48px
+}
+
+.text { margin-left: 68px }
+
+.clear { clear: both }
+
+#body {
+  width: 800px;
+  overflow: auto;
+}
+
+#title {
+  text-align: center;
+  color: #9ae4e8;
+  font-weight: bold
+}
+
+#timeline { list-style-type: none }
+
+#timeline li { padding: 10px 0 }
+
+#template { display: none }
